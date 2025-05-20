@@ -219,12 +219,23 @@ function startGame() {
 }
 
 function restartGame() {
+  document.getElementById("win-container").style.display = "none";
+  document.getElementById("lose-container").style.display = "none";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("hint-button").disabled = false;
+
   setup(currentPairs, currentTime);
 }
 
 // Reset back to start screen
 function resetGame() {
   clearInterval(window.gameTime);
+
+  document.getElementById("win-container").style.display = "none";
+  document.getElementById("lose-container").style.display = "none";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("hint-button").disabled = false;
+
 
   document.getElementById("game-grid").style.display = "none";
   document.getElementById("game-buttons").style.display = "none";
