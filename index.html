@@ -6,28 +6,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pkmn Memory Game</title>
-  <link rel="stylesheet" href="style.css">
+  <link id="website-theme" rel="stylesheet" href="public/css/style-dark.css">
   <link rel="icon" href="public/img/back.ico" type="image/x-icon">
   <!-- import jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-  <div id="background-img"></div>
-  <div id="start-container">
-    <div id="start-text">
-      <h1>Pokemon Memory Game</h1>
-      <p>Please choose a difficulty</p>
-    </div>
-    <div>
-      <button id="easy" class="btn" onclick="setup(4, 60)">Easy</button>
-      <button id="medium" class="btn" onclick="setup(8, 45)">Medium</button>
-      <button id="hard" class="btn" onclick="setup(12, 30)">Hard</button>
-    </div>
 
+  <div id="background-img"></div>
+
+  <div id="theme-change">
+    <button id="theme-button" class="btn" onclick="changeTheme()">
+      <img id="pokeball-theme" src="public/img/pokeball-light.png" alt="theme-icon">
+    </button>
+  </div>
+
+  <div id="start-container">
+    <h1>Pokemon Memory Game</h1>
+    <button id="start" class="btn" onclick="startGame()">Start</button>
+    <button id="themeChange" class="btn" onclick="changeTheme()">Change Theme</button>
   </div>
 
   <div id="game-container">
+
+    <div id="start-text">
+      <p>Please choose a difficulty</p>
+      <div id="difficulty-buttons">
+        <button id="easy" class="btn" onclick="setup(4, 60)">Easy</button>
+        <button id="medium" class="btn" onclick="setup(8, 45)">Medium</button>
+        <button id="hard" class="btn" onclick="setup(12, 30)">Hard</button>
+      </div>
+    </div>
 
     <div id="battle-hud">
       <div id="game-info"><span id="timer">0s</span><span id="gameLevel">Lv0</span></div>
@@ -38,13 +48,14 @@
 
     <div id="game-buttons">
       <button id="restart" class="btn" onclick="resetGame()">Reset</button>
+      <button id="restart" class="btn" onclick="restartGame()">Restart</button>
       <div id="hint">
         <p style="font-size: 1.5em;">You unlocked a hint!</p>
         <button id="hint-button" class="btn" onclick="showHint()">Hint</button>
       </div>
     </div>
 
-    <div id="game_grid"></div>
+    <div id="game-grid"></div>
 
     <div id="game-header">
       <div class="header-box">Total Pairs: <span id="total-pairs">0</span></div>

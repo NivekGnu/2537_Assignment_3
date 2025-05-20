@@ -63,6 +63,9 @@ function generatePairs(pairCount) {
   });
 }
 
+let currentPairs = 0;
+let currentTime = 0;
+
 // Function to set up the game
 function setup(numPairs, timeLimit) {
   // Game logic
@@ -73,6 +76,9 @@ function setup(numPairs, timeLimit) {
   let pairsRemain = 0;
   const totalPairs = numPairs;
   let clickCount = 0;
+
+  currentPairs = numPairs;
+  currentTime = timeLimit;
 
   // Timer logic
   let seconds = 0;
@@ -88,12 +94,17 @@ function setup(numPairs, timeLimit) {
   const timerBar = document.getElementById("timer-bar");
   timerElement.innerHTML = "Time: 0s";
 
-  document.getElementById("start-container").style.display = "none";
-  document.getElementById("game-container").style.display = "flex";
+  document.getElementById("start-text").style.display = "none";
+  document.getElementById("battle-hud").style.display = "block";
+  document.getElementById("game-buttons").style.display = "block";
 
   const numClicks = document.getElementById("click-count");
   const pairsLeft = document.getElementById("pairs-left");
   const pairsMatched = document.getElementById("pairs-matched");
+
+  numClicks.innerHTML = 0;
+  pairsLeft.innerHTML = totalPairs;
+  pairsMatched.innerHTML = 0;
   document.getElementById("total-pairs").innerHTML = `${totalPairs}`;
 
   document.getElementById("gameLevel").innerHTML = `Lv${difficultyLevels[maxTime]}`;
@@ -131,7 +142,8 @@ function setup(numPairs, timeLimit) {
   }, 1000);
 
   generatePairs(numPairs).then((cardPairs) => {
-    const container = document.getElementById("game_grid");
+    const container = document.getElementById("game-grid");
+    container.style.display = "flex";
     container.innerHTML = ""; // Clear previous cards
 
     cardPairs.forEach((imgUrl, index) => {
@@ -200,14 +212,29 @@ function setup(numPairs, timeLimit) {
   });
 }
 
+function startGame() {
+  document.getElementById("start-container").style.display = "none";
+  document.getElementById("game-container").style.display = "flex";
+  document.getElementById("game-buttons").style.display = "none";
+}
+
+function restartGame() {
+  setup(currentPairs, currentTime);
+}
+
 // Reset back to start screen
 function resetGame() {
-  document.getElementById("game-container").style.display = "none";
-  document.getElementById("start-container").style.display = "flex";
-  document.getElementById("lose-container").style.display = "none";
-  document.getElementById("win-container").style.display = "none";
   clearInterval(window.gameTime);
-  seconds = 0;
+
+  document.getElementById("game-grid").style.display = "none";
+  document.getElementById("game-buttons").style.display = "none";
+  document.getElementById("battle-hud").style.display = "none";
+  document.getElementById("start-text").style.display = "block";
+
+  document.getElementById("total-pairs").innerHTML = "0";
+  document.getElementById("pairs-left").innerHTML = "0";
+  document.getElementById("pairs-matched").innerHTML = "0";
+  document.getElementById("click-count").innerHTML = "0";
 }
 
 function showHint() {
@@ -223,4 +250,19 @@ function showHint() {
 
   // Disable hint button
   document.getElementById("hint-button").disabled = true;
+}
+
+function changeTheme() {
+  const pokeballTheme = document.getElementById("pokeball-theme");
+  const websiteTheme = document.getElementById("website-theme");
+
+  if (pokeballTheme.src.includes("pokeball-light.png")) {
+    pokeballTheme.src = "public/img/pokeball-dark.png";
+    websiteTheme.href = "public/css/style-light.css";
+  }
+  else {
+    pokeballTheme.src = "public/img/pokeball-light.png";
+    websiteTheme.href = "public/css/style-dark.css";
+
+  }
 }
