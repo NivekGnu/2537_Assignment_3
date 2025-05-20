@@ -71,6 +71,15 @@ async function generatePairs(pairCount) {
   return duplicated;
 }
 
+// While waiting for cards and pokemon images to generate
+function showLoading() {
+  document.getElementById("loading-window").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loading-window").style.display = "none";
+}
+
 let currentPairs = 0;
 let currentTime = 0;
 
@@ -122,7 +131,12 @@ function setup(numPairs, timeLimit) {
     clearInterval(window.gameTime);
   }
 
+  showLoading();
+
   generatePairs(numPairs).then((cardPairs) => {
+
+    hideLoading();
+
     // Start a new timer
     window.gameTime = setInterval(() => {
       seconds++;
