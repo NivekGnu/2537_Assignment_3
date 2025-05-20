@@ -227,7 +227,7 @@ img {
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: linear-gradient(135deg, #6a11cb, #2575fc);
-  color: white;
+  color: black;
 }
 
 #win-text {
@@ -251,8 +251,7 @@ img {
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: linear-gradient(135deg, #b00020, #f44336, #ff7961);
-  color: white;
-  /* keep text readable */
+  color: black;
 }
 
 #lose-text {
