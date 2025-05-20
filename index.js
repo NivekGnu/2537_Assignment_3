@@ -94,6 +94,7 @@ function setup(numPairs, timeLimit) {
   const numClicks = document.getElementById("click-count");
   const pairsLeft = document.getElementById("pairs-left");
   const pairsMatched = document.getElementById("pairs-matched");
+  document.getElementById("total-pairs").innerHTML = `${totalPairs}`;
 
   document.getElementById("gameLevel").innerHTML = `Lv${difficultyLevels[maxTime]}`;
 
@@ -150,7 +151,6 @@ function setup(numPairs, timeLimit) {
       }
       else {
         secondCard = $(this).find(".front_face")[0]
-        console.log(firstCard, secondCard);
         clickCount++;
         numClicks.innerHTML = `${clickCount}`;
         lockBoard = true;
@@ -161,7 +161,6 @@ function setup(numPairs, timeLimit) {
           ==
           secondCard.src
         ) {
-          console.log("match")
           $(`#${firstCard.id}`).parent().addClass("matched").parent().off("click")
           $(`#${secondCard.id}`).parent().addClass("matched").parent().off("click")
 
@@ -187,7 +186,6 @@ function setup(numPairs, timeLimit) {
         }
         // Cards don't match 
         else {
-          console.log("no match")
           setTimeout(() => {
             $(`#${firstCard.id}`).parent().toggleClass("flip")
             $(`#${secondCard.id}`).parent().toggleClass("flip")
