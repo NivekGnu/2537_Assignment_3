@@ -63,7 +63,7 @@ async function generatePairs(pairCount) {
   for (let i = 0; i < ids.length; i++) {
     const img = await getPokemon(ids[i]);
     images.push(img);
-    await delay(300 + i * 50); // grows gradually to prevent request timeout
+    await delay(300 + i * 100); // grows gradually to prevent request timeout
   }
 
   const duplicated = images.flatMap((img) => [img, img]); // create pairs
@@ -160,7 +160,6 @@ function setup(numPairs, timeLimit) {
         $(".card").off("click");
         clearInterval(window.gameTime);
         document.getElementById("lose-container").style.display = "flex";
-        document.getElementById("buttons").style.display = "flex";
       }
     }, 1000);
 
