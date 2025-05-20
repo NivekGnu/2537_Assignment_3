@@ -1,0 +1,225 @@
+/* General css */
+@font-face {
+  font-family: 'Pokemon Font';
+  src: url('public/font/pkmn_font.ttf') format('truetype');
+  font-weight: normal;
+}
+
+body {
+  margin: 0px;
+  font-family: 'Pokemon Font', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+#background-img {
+  background-image: url('public/img/gen1pkmn.png');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  filter: brightness(40%);
+}
+
+button {
+  font-family: 'Pokemon Font', sans-serif;
+  font-size: 1.5em;
+}
+
+/* Start menu css */
+#start-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#start-text {
+  text-align: center;
+  color: white;
+  font-size: 2em;
+}
+
+/* Game grid css */
+#game-container {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#game-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#hint {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+#game-header {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-family: 'Pokemon Font', sans-serif;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+  z-index: 1000;
+  /* ensure it's on top of other elements */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header-box {
+  border: 2px solid #3b4cca;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+#game_grid {
+  width: 90vw;
+  height: 40vh;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 12%;
+  height: 55%;
+  aspect-ratio: 2 / 3;
+  position: relative;
+  transition: transform 1s;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.card:not(.flip) {
+  cursor: pointer;
+}
+
+img {
+  width: 100%
+}
+
+.front_face,
+.back_face {
+  position: absolute;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+
+.flip {
+  transform: rotateY(180deg);
+}
+
+
+.front_face {
+  transform: rotateY(180deg);
+}
+
+/* Timer hud css */
+#battle-hud {
+  width: 300px;
+  margin: 20px auto;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: 3px solid #444;
+  border-radius: 8px;
+}
+
+#pokemon-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: left;
+}
+
+.hp-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ccc;
+  border: 2px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  width: 100%;
+  background-color: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+#game-info {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+/* Win game css  */
+#win-container {
+  display: none;
+  position: fixed;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#win-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#lose-container {
+  display: none;
+  position: fixed;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#lose-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
