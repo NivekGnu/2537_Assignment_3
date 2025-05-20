@@ -1,12 +1,10 @@
 // Function to fetch a random Pokemon image
-function getPokemon() {
+function getPokemon(id) {
   const pokemonID = Math.floor(Math.random() * 1026) + 1;
 
-  return fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonID)
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then((response) => response.json())
-    .then((data) => {
-      return data.sprites.front_default
-    })
+    .then((data) => data.sprites.front_default)
 }
 
 // Function to create a card element
@@ -52,15 +50,25 @@ function shuffleCards(cardPairs) {
   }
 }
 
-// Function to generate pairs of Pokemon 
-function generatePairs(pairCount) {
-  const ids = getRandomPokemonIds(pairCount);
+// Delay the request to stop error code 429 (too many requests)
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-  return Promise.all(ids.map(getPokemon)).then((images) => {
-    const duplicated = images.flatMap((img) => [img, img]); // create pairs
-    shuffleCards(duplicated); // shuffle the 2n images
-    return duplicated;
-  });
+// Function to generate pairs of Pokemon 
+async function generatePairs(pairCount) {
+  const ids = getRandomPokemonIds(pairCount);
+  const images = [];
+
+  for (let i = 0; i < ids.length; i++) {
+    const img = await getPokemon(ids[i]);
+    images.push(img);
+    await delay(300 + i * 50); // grows gradually to prevent request timeout
+  }
+
+  const duplicated = images.flatMap((img) => [img, img]); // create pairs
+  shuffleCards(duplicated);
+  return duplicated;
 }
 
 let currentPairs = 0;
@@ -114,34 +122,34 @@ function setup(numPairs, timeLimit) {
     clearInterval(window.gameTime);
   }
 
-  // Start a new timer
-  window.gameTime = setInterval(() => {
-    seconds++;
-    timerElement.innerHTML = `Time: ${seconds}s`;
-
-    // Update HP bar (percentage left)
-    const percent = Math.max(0, ((maxTime - seconds) / maxTime) * 100);
-    timerBar.style.width = `${percent}%`;
-
-    // Change colour of bar based on time left
-    if (percent < 30) {
-      timerBar.style.backgroundColor = "#e53935"; // red
-    } else if (percent < 60) {
-      timerBar.style.backgroundColor = "#f9a825"; // yellow
-    } else {
-      timerBar.style.backgroundColor = "#4CAF50"; // green
-    }
-
-    // Check if time is up; ends game if yes
-    if (seconds >= maxTime) {
-      $(".card").off("click");
-      clearInterval(window.gameTime);
-      document.getElementById("lose-container").style.display = "flex";
-      document.getElementById("buttons").style.display = "flex";
-    }
-  }, 1000);
-
   generatePairs(numPairs).then((cardPairs) => {
+    // Start a new timer
+    window.gameTime = setInterval(() => {
+      seconds++;
+      timerElement.innerHTML = `Time: ${seconds}s`;
+
+      // Update HP bar (percentage left)
+      const percent = Math.max(0, ((maxTime - seconds) / maxTime) * 100);
+      timerBar.style.width = `${percent}%`;
+
+      // Change colour of bar based on time left
+      if (percent < 30) {
+        timerBar.style.backgroundColor = "#e53935"; // red
+      } else if (percent < 60) {
+        timerBar.style.backgroundColor = "#f9a825"; // yellow
+      } else {
+        timerBar.style.backgroundColor = "#4CAF50"; // green
+      }
+
+      // Check if time is up; ends game if yes
+      if (seconds >= maxTime) {
+        $(".card").off("click");
+        clearInterval(window.gameTime);
+        document.getElementById("lose-container").style.display = "flex";
+        document.getElementById("buttons").style.display = "flex";
+      }
+    }, 1000);
+
     const container = document.getElementById("game-grid");
     container.style.display = "flex";
     container.innerHTML = ""; // Clear previous cards
